@@ -17,7 +17,7 @@ var serverCmd = &cobra.Command{
 	Short: "Command to control the server",
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := cmd.Help(); err != nil {
-			slog.Error("Failed to call cmd.Help() within the server command")
+			slog.Error("Failed to call cmd.Help() within the server command", "error", err)
 		}
 	},
 }

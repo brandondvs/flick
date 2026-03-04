@@ -9,10 +9,10 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "flick",
-	Short: "Flice is a feature flag HTTP service",
+	Short: "Flick is a feature flag HTTP service",
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := cmd.Help(); err != nil {
-			slog.Error("Failed to call cmd.Help() within the root command")
+			slog.Error("Failed to call cmd.Help() within the root command", "error", err)
 		}
 	},
 }
