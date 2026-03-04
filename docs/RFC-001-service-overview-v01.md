@@ -7,13 +7,13 @@ implementing is available to customers, allowing the feature to be enabled or di
 # Technical Requirements
 
 The below requirements will be implemented for v0.1. Additionally, the requirements are scoped in such a way
-to provide the foundational architecture from the start to be aligned with production-level monitoring and logging.
+to provide the foundational architecture from the start.
 
 ## Service Implementation
 - Written in Golang
 - In-memory storage for feature flag values
 - Postgresql driver with connection management and feature flag data entity models
-- HTTP API to create, update, query feature flags
+- HTTP API to create, read, update, delete feature flags
 - Feature flag change propagation. Since each feature flag is stored in a persistent storage layer, when changes occur
 these need to be propagated to each instance of Flick. Use `LISTEN/NOTIFY` in Postgresql ([sql-notify](https://www.postgresql.org/docs/current/sql-notify.html)) with simple message to trigger in-memory data reconcilation with Postgresql. Flick startup will already fetch all feature flag records to seed in-memory store. Can evaluate other options in the future if this poses as a problem area.
 - Authentication via symmetrical key set server-side and provided in the header of HTTP requests
