@@ -2,8 +2,12 @@ package cmd
 
 import (
 	"log/slog"
+	"net/http"
 
 	"github.com/spf13/cobra"
+
+	"github.com/brandondvs/flick/internal/server"
+	"github.com/brandondvs/flick/internal/store"
 )
 
 func init() {
@@ -26,6 +30,12 @@ var serverStartCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Command to start the flick HTTP server",
 	Run: func(cmd *cobra.Command, args []string) {
-		slog.Info("Starting server")
+		s := store.New()
+		srv := server.New(s)
+
+		slog.Info("Server running")
+		if err := http.ListenAndServe(":8080", srv); err != nil {
+			slog.Error("Failed to start listener", "error", err)
+		}
 	},
 }
