@@ -2,10 +2,13 @@ package cmd
 
 import (
 	"log/slog"
+	"net"
 	"net/http"
+	"strconv"
 
 	"github.com/spf13/cobra"
 
+	"github.com/brandondvs/flick/internal/config"
 	"github.com/brandondvs/flick/internal/server"
 	"github.com/brandondvs/flick/internal/store"
 )
@@ -33,8 +36,12 @@ var serverStartCmd = &cobra.Command{
 		s := store.New()
 		srv := server.New(s)
 
-		slog.Info("Server running")
-		if err := http.ListenAndServe(":8080", srv); err != nil {
+		port := strconv.Itoa(config.ServerPort())
+		hostPort := net.JoinHostPort(config.ServerHost(), port)
+
+		slog.Info("Server running", "host", hostPort)
+
+		if err := http.ListenAndServe(hostPort, srv); err != nil {
 			slog.Error("Failed to start listener", "error", err)
 		}
 	},
