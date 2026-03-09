@@ -33,3 +33,6 @@ go.work.sum
 
 # Flick build directory
 build/
+
+# Flick database data directory mount
+.flick-data/
