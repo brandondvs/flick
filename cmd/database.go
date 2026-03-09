@@ -38,5 +38,12 @@ var databaseValidateCmd = &cobra.Command{
 			os.Exit(1)
 		}
 		slog.Info("Connection valid!")
+
+		slog.Info("Validating database schema")
+		if err := database.Schema(db).IsValid(); err != nil {
+			slog.Error("Database schema is not valid", "error", err)
+			os.Exit(1)
+		}
+		slog.Info("Database schema is valid")
 	},
 }

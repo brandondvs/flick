@@ -24,7 +24,11 @@ func DatabaseConnectionString() string {
 	port := viper.GetInt("database.port")
 	user := viper.GetString("database.user")
 	password := viper.GetString("database.password")
-	databaseName := viper.GetString("database.name")
+	databaseName := DatabaseName()
 
 	return fmt.Sprintf("postgresql://%s:%s@%s:%d/%s?sslmode=disable", user, password, host, port, databaseName)
+}
+
+func DatabaseName() string {
+	return viper.GetString("database.name")
 }
